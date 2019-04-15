@@ -12,54 +12,64 @@ class SearchBar extends React.Component {
     constructor(props){
         super(props);
         this.state={
-            searchBar:{
-                term:'',
-                location:'',
-                sortBy:'best_match'}
+            searchyelp: this.props.searchyelp(),
+                term: '',
+                location: '',
+                sortBy: 'best_match'
         }
         this.renderSortByOptions = this.renderSortByOptions.bind(this);
         this.getSortByClass = this.getSortByClass.bind(this);
         this.handleSortByChange = this.handleSortByChange.bind(this);
         this.handleTermChange = this.handleTermChange.bind(this);
         this.handleLocationChange = this.handleLocationChange.bind(this);
+        this.handleSearch = this.handleSearch.bind(this);
     }
 
     renderSortByOptions(){
         // console.log(sortByOptions);
         return Object.keys(sortByOptions).map((sortByOption,i) => {
-             console.log(sortByOptions[sortByOption]);
                let sortByOptionValue = sortByOptions[sortByOption];
-            // console.log(sortByOptionValue);
             return <li onClick={this.handleSortByChange} className={this.getSortByClass(sortByOptionValue)} key={'key_'+i}>{sortByOption}</li>;
        });
      }
      getSortByClass(sortByOption){
-        if(this.state.sortBy == sortByOption ){
+        if(this.state.sortBy === sortByOption ){
             return 'active';
         }
         return '';
     }
-    handleSortByChange(sortByOption){
-        console.log(sortByOption);
+    handleSortByChange(e){
+        let sortByOptionText = e.target.textContent;
         this.setState({
-            sortBy: sortByOption
+            sortBy: sortByOptions[sortByOptionText]
         })
     }
     handleTermChange(e){
         let term = e.target.value;
         this.setState({
-            term: {term}
+             term: term 
         })
     }
     handleLocationChange(e){
         let location = e.target.value;
         this.setState({
-            location: {location}        
+            location:location  
         })
     }
+    handleSearch(e){
+         let term = this.state.term;
+         let location = this.state.location;
+         let sortBy = this.state.sortBy;
+            this.setState({
+                searchyelp: this.props.searchyelp(term, location, sortBy)
+            })
+            e.preventDefault();
+
+    }
     render(){
+
         return(
-            <div className="SearchBar">
+            <div className="SearchBar" searchyelp={this.props.searchYelp}>
                 <div className="SearchBar-sort-options">
                     <ul>
                         {this.renderSortByOptions()}
@@ -70,7 +80,7 @@ class SearchBar extends React.Component {
                     <input onChange={this.handleLocationChange} placeholder="Where?" />
                 </div>
                 <div className="SearchBar-submit">
-                    <a>Let's Go</a>
+                    <a href="#" onClick={this.handleSearch}>Let's Go</a>
                 </div>
             </div>
         );

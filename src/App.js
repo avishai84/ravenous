@@ -17,12 +17,32 @@ const business = {
 const businesses = [
   business, business, business, business, business, business
 ];
+
 class App extends Component {
+  constructor(props){
+    super(props);
+    this.state={
+      term:'',
+      location:'',
+      sortBy:''
+    }
+    this.searchYelp = this.searchYelp.bind(this);
+}
+
+searchYelp(term, location, sortBy){
+    this.setState({
+      term:term,
+      location:location,
+      sortBy:sortBy
+    })
+}
+
   render() {
+    console.log(`Searching Yelp with ${this.state.term}, ${this.state.location}, ${this.state.sortBy}`);
     return (
     <div className="App">
       <h1>ravenous</h1>
-        <SearchBar/>
+        <SearchBar searchyelp={this.searchYelp}/>
         <BusinessList businesses={businesses}/>
     </div>
     );
