@@ -7,7 +7,6 @@ const sortByOptions = {
     'Most Reviewed':'review_count'
 };
 
-
 class SearchBar extends React.Component {
     constructor(props){
         super(props);
@@ -26,7 +25,6 @@ class SearchBar extends React.Component {
     }
 
     renderSortByOptions(){
-        // console.log(sortByOptions);
         return Object.keys(sortByOptions).map((sortByOption,i) => {
                let sortByOptionValue = sortByOptions[sortByOption];
             return <li onClick={this.handleSortByChange} className={this.getSortByClass(sortByOptionValue)} key={'key_'+i}>{sortByOption}</li>;
